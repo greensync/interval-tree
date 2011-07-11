@@ -17,8 +17,9 @@
 #  p t.search(2) => [0...3, 1...4]
 #  p t.search(1...3) => [0...3, 1...4, 3...5]
 #
-# note: intevels are expected to be "left-closed and right-open"
-# that can be expressed by Range object literals (first...last)
+# note: result intervals are always returned
+# in the "left-closed and right-open" style that can be expressed
+# by three-dotted Range object literals (first...last)
 #
 
 module IntervalTree
@@ -63,7 +64,7 @@ module IntervalTree
 
       if last
         result = Array.new        
-        (first..last+1).each do |j|
+        (first...last).each do |j|
           search(j).each{|k|result << k}
           result.uniq!
         end
@@ -77,14 +78,17 @@ module IntervalTree
 
     def ensure_exclusive_end(ranges)
       ranges.map do |range|
-        if range.exclude_end?
+        case 
+        when !range.respond_to?(:exclude_end?)
           range
-        else
+        when range.exclude_end?
+          range
+        else 
           (range.first ... range.end+1)
         end
       end
     end
-
+    
     # argumented tree
     # using a start point as resresentative value of the node
     def center(intervals)
@@ -94,9 +98,9 @@ module IntervalTree
 
     def point_search(node, point, result)
       node.s_center.each do |k|
-        result << k if (k.first <= point) && (point <= k.last) 
+        result << k if (k.first <= point) && (point < k.last) 
       end
-      if node.left_node && ( point <= node.left_node.s_max )
+      if node.left_node && ( point < node.left_node.s_max )
         point_search(node.left_node, point, []).each{|k|result << k}
       end
       if node.right_node && ( node.right_node.x_center <= point )

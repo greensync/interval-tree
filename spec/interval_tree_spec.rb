@@ -88,18 +88,28 @@ describe "IntervalTree::Tree" do
       end
     end
 
-    # context 'given [(0...8), (1...5), (2...6)] and a query by (1...4)' do
-    #   it 'returns [(0...8), (1...5), (2...6)]' do
-    #     itvs = [(0...8), (1...5), (2...6)]
-    #     results = IntervalTree::Tree.new(itvs).search(1...4)
-    #     results.should  == itvs
-    #   end
-    # end
+    context 'given [(1...3), (3...5)] and a query by 3' do
+      it 'returns [(3...9)]' do
+        results = IntervalTree::Tree.new([(1...3), (3...5)]).search(3...9)
+        results.should  == [(3...5)]
+      end
+    end
 
+    context 'given [(1...3), (3...5), (4...8)] and a query by (3...5)' do
+      it 'returns [(3...5), (4...8)]' do
+        itvs = [(1...3), (3...5), (4...8)]
+        results = IntervalTree::Tree.new(itvs).search(3...5)
+        results.should  == [(3...5), (4...8)]
+      end
+    end
 
-
-
-
+    context 'given [(1...3), (3...5), (3...9), (4...8)] and a query by (3...5)' do
+      it 'returns [(3...5), (3...9), (4...8)]' do
+        itvs = [(1...3), (3...5), (3...9), (4...8)]
+        results = IntervalTree::Tree.new(itvs).search(3...5)
+        results.should  == [(3...5), (3...9), (4...8)]
+      end
+    end
 
   end
 
