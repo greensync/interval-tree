@@ -1,6 +1,6 @@
 #!/usr/local/bin/ruby-1.9
 #
-# Title:: the IntervalTree module using "argumanted tree"
+# Title:: the IntervalTree module using "augmented tree"
 # Author:: MISHIMA, Hiroyuki ( https://github.com/misshie ), 2011
 # Copyright:: The MIT/X11 license
 #
@@ -89,7 +89,7 @@ module IntervalTree
       end
     end
     
-    # argumented tree
+    # augmented tree
     # using a start point as resresentative value of the node
     def center(intervals)
       fs = intervals.sort_by{|x|x.first}

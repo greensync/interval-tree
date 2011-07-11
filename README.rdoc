@@ -1,5 +1,5 @@
 = IntervalTree
-An implementation of the argumented interval tree algorithm in Ruby
+An implementation of the agumented interval tree algorithm in Ruby
 
 == See also
 * description in Wikipedia http://en.wikipedia.org/wiki/Interval_tree
