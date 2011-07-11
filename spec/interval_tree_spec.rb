@@ -17,7 +17,7 @@ describe "IntervalTree::Tree" do
 
   describe '#center' do
     context 'given [(1...5),]' do
-      it 'returns 2' do
+      it 'returns 1' do
         itvs = [(1...5),]
         t = IntervalTree::Tree.new([])
         t.__send__(:center, itvs).should == 1
