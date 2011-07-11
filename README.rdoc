@@ -14,7 +14,7 @@ An implementation of the argumented interval tree algorithm in Ruby
  p t.search(1...3) => [0...3, 1...4, 3...5]
 
 == Note
-result intervals are always returned
+Result intervals are always returned
 in the "left-closed and right-open" style that can be expressed
 by three-dotted Range object literals (first...last)
 
