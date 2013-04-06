@@ -25,8 +25,9 @@
 module IntervalTree
 
   class Tree
-    def initialize(ranges)
-      ranges_excl = ensure_exclusive_end([ranges].flatten)
+    def initialize(ranges, &range_factory)
+      range_factory = lambda { |l, r| (l ... r+1) } unless block_given?
+      ranges_excl = ensure_exclusive_end([ranges].flatten, range_factory)
       @top_node = divide_intervals(ranges_excl)
     end
     attr_reader :top_node
@@ -76,7 +77,7 @@ module IntervalTree
     
     private
 
-    def ensure_exclusive_end(ranges)
+    def ensure_exclusive_end(ranges, range_factory)
       ranges.map do |range|
         case 
         when !range.respond_to?(:exclude_end?)
@@ -84,7 +85,7 @@ module IntervalTree
         when range.exclude_end?
           range
         else 
-          (range.first ... range.end+1)
+          range_factory.call(range.first, range.end)
         end
       end
     end
@@ -120,7 +121,7 @@ module IntervalTree
     end
     attr_reader :x_center, :s_center, :s_max, :left_node, :right_node   
   end # class Node
-  
+
 end # module IntervalTree
 
 if  __FILE__ == $0
