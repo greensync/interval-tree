@@ -1,5 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
-require 'interval_tree'
+require 'spec_helper'
 
 describe "IntervalTree::Node" do
 
@@ -35,9 +34,9 @@ describe "IntervalTree::Tree" do
   end
 
   describe '.new' do
-    context 'given [(1...5),]' do
-      it 'returns an Tree objects' do
-        itvs = [(1...5),]
+    context 'given [(1...5)]' do
+      it 'returns a Tree' do
+        itvs = [(1...5)]
         IntervalTree::Tree.new(itvs).should be_an IntervalTree::Tree
       end
     end
@@ -79,6 +78,17 @@ describe "IntervalTree::Tree" do
   end
 
   describe '#search' do
+    context 'given []' do
+      it 'returns nil for all searches' do
+        itvs = []
+        IntervalTree::Tree.new(itvs).tap do |tree|
+          tree.search(5).should be_nil
+          tree.search(1..2).should be_nil
+          tree.search(1...2).should be_nil
+        end
+      end
+    end
+
     context 'given [(1...5)] a point query "3"' do
       it 'returns an array of intervals (1...5)]' do
         IntervalTree::Tree.new([1...5]).search(3).should == [1...5]
@@ -140,4 +150,3 @@ describe "IntervalTree::Tree" do
   end
 
 end
-
