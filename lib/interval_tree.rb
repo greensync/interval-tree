@@ -7,8 +7,8 @@
 # see also ....
 #  description in Wikipedia
 #    http://en.wikipedia.org/wiki/Interval_tree
-#  implementstion in Python by Tyler Kahn 
-#    http://forrst.com/posts/Interval_Tree_implementation_in_python-e0K    
+#  implementstion in Python by Tyler Kahn
+#    http://forrst.com/posts/Interval_Tree_implementation_in_python-e0K
 #
 # Usage:
 #  require "interval_tree"
@@ -25,8 +25,9 @@
 module IntervalTree
 
   class Tree
-    def initialize(ranges)
-      ranges_excl = ensure_exclusive_end([ranges].flatten)
+    def initialize(ranges, &range_factory)
+      range_factory = lambda { |l, r| (l ... r+1) } unless block_given?
+      ranges_excl = ensure_exclusive_end([ranges].flatten, range_factory)
       @top_node = divide_intervals(ranges_excl)
     end
     attr_reader :top_node
@@ -54,6 +55,7 @@ module IntervalTree
 
 
     def search(interval)
+      return nil unless @top_node
       if interval.respond_to?(:first)
         first = interval.first
         last = interval.last
@@ -63,7 +65,7 @@ module IntervalTree
       end
 
       if last
-        result = Array.new        
+        result = Array.new
         (first...last).each do |j|
           search(j).each{|k|result << k}
           result.uniq!
@@ -73,22 +75,22 @@ module IntervalTree
         point_search(self.top_node, first, []).sort_by{|x|[x.first, x.last]}
       end
     end
-    
+
     private
 
-    def ensure_exclusive_end(ranges)
+    def ensure_exclusive_end(ranges, range_factory)
       ranges.map do |range|
-        case 
+        case
         when !range.respond_to?(:exclude_end?)
           range
         when range.exclude_end?
           range
-        else 
-          (range.first ... range.end+1)
+        else
+          range_factory.call(range.first, range.end)
         end
       end
     end
-    
+
     # augmented tree
     # using a start point as resresentative value of the node
     def center(intervals)
@@ -98,7 +100,7 @@ module IntervalTree
 
     def point_search(node, point, result)
       node.s_center.each do |k|
-        result << k if (k.first <= point) && (point < k.last) 
+        result << k if (k.first <= point) && (point < k.last)
       end
       if node.left_node && ( point < node.left_node.s_max )
         point_search(node.left_node, point, []).each{|k|result << k}
@@ -118,9 +120,9 @@ module IntervalTree
       @left_node = left_node
       @right_node = right_node
     end
-    attr_reader :x_center, :s_center, :s_max, :left_node, :right_node   
+    attr_reader :x_center, :s_center, :s_max, :left_node, :right_node
   end # class Node
-  
+
 end # module IntervalTree
 
 if  __FILE__ == $0
