@@ -7,7 +7,7 @@
 # see also ....
 #  description in Wikipedia
 #    http://en.wikipedia.org/wiki/Interval_tree
-#  implementstion in Python by Tyler Kahn
+#  implementation in Python by Tyler Kahn
 #    http://forrst.com/posts/Interval_Tree_implementation_in_python-e0K
 #
 # Usage:
@@ -20,6 +20,12 @@
 # note: result intervals are always returned
 # in the "left-closed and right-open" style that can be expressed
 # by three-dotted Range object literals (first...last)
+#
+# ChangeLog:
+# 2013-04-06, contribution by ssimenov ( https://github.com/ssimeonov ):
+#  adding Range factory, a nil guard in Tree#search
+#  cosmetic improvements 
+#  Thanks so much!
 #
 
 module IntervalTree
