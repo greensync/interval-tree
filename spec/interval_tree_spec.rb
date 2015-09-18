@@ -93,11 +93,27 @@ describe "IntervalTree::Tree" do
       it 'returns an array of intervals (1...5)]' do
         IntervalTree::Tree.new([1...5]).search(3).should == [1...5]
       end
+
+      it 'returns an empty array in the right end corner case' do
+        IntervalTree::Tree.new([1...5]).search(5).should == []
+      end
+
+      it 'returns the range in the left end corner case' do
+        IntervalTree::Tree.new([1...5]).search(1).should == [1...5]
+      end
     end
 
     context 'given non-array full-closed "(1..4)" and a point query "3"' do
       it 'returns an array contains a half-open interval (1...5)]' do
-        IntervalTree::Tree.new(1..4).search(3).should == [1...5]
+        IntervalTree::Tree.new(1..4).search(4).should == [1...5]
+      end
+
+      it 'returns an empty array in the right end corner case' do
+        IntervalTree::Tree.new(1..4).search(5).should == []
+      end
+
+      it 'returns the range in the left end corner case' do
+        IntervalTree::Tree.new(1..4).search(1).should == [1...5]
       end
     end
 
