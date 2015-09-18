@@ -22,3 +22,7 @@ rdoc
 pkg
 
 ## PROJECT::SPECIFIC
+
+## RubyGems
+
+interval_tree-*.gem
