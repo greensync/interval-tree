@@ -19,7 +19,7 @@ describe "IntervalTree::Tree" do
       it 'returns 1' do
         itvs = [(1...5),]
         t = IntervalTree::Tree.new([])
-        t.__send__(:center, itvs).should == 1
+        t.__send__(:center, itvs).should == 3
 
       end
     end
@@ -28,7 +28,7 @@ describe "IntervalTree::Tree" do
       it 'returns 2' do
         itvs = [(1...5), (2...6),]
         t = IntervalTree::Tree.new([])
-        t.__send__(:center, itvs).should == 2
+        t.__send__(:center, itvs).should == 3
       end
     end
   end
@@ -45,7 +45,7 @@ describe "IntervalTree::Tree" do
       it 'returns ret.top_node.x_centeran == 2 ' do
         itvs = [(1...5), (2...6), (3...7)]
         tree = IntervalTree::Tree.new(itvs)
-        tree.top_node.x_center.should == 2
+        tree.top_node.x_center.should == 4
       end
     end
 
@@ -53,7 +53,7 @@ describe "IntervalTree::Tree" do
       it 'returns ret.top_node.x_centeran == 2 ' do
         itvs = [(1..5), (2..6), (3..7)]
         tree = IntervalTree::Tree.new(itvs)
-        tree.top_node.x_center.should == 2
+        tree.top_node.x_center.should == 4
       end
     end
 
