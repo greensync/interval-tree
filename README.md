@@ -5,6 +5,7 @@ An implementation of the augmented interval tree algorithm in Ruby
 * description in Wikipedia http://en.wikipedia.org/wiki/Interval_tree
 * an implementation in Python by Tyler Kahn http://forrst.com/posts/Interval_Tree_implementation_in_python-e0K    
 # ChanegLog
+
 ### 2014-11-02, contribution by Carlos Alonso ( https://github.com/calonso )
 * Improved centering
 * Fixed searching: With some use cases with very large trees, the library fails to find intervals.
