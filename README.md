@@ -7,7 +7,7 @@ An implementation of the augmented interval tree algorithm in Ruby
 
 # ChanegLog
 
-### 2014-11-02, contribution by Carlos Alonso ( https://github.com/calonso )
+### 2015-11-02, contribution by Carlos Alonso ( https://github.com/calonso )
 * Improved centering
 * Fixed searching: With some use cases with very large trees, the library fails to find intervals.
 * Added rubygems structure to be able to be pushed ad a gem  
