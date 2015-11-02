@@ -24,7 +24,7 @@
 # ChangeLog:
 # 2013-04-06, contribution by ssimenov ( https://github.com/ssimeonov ):
 #  adding Range factory, a nil guard in Tree#search
-#  cosmetic improvements 
+#  cosmetic improvements
 #  Thanks so much!
 #
 
@@ -47,9 +47,9 @@ module IntervalTree
 
       intervals.each do |k|
         case
-        when k.first < x_center
+        when k.last < x_center
           s_left << k
-        when x_center < k.first
+        when k.first > x_center
           s_right << k
         else
           s_center << k
@@ -100,18 +100,20 @@ module IntervalTree
     # augmented tree
     # using a start point as resresentative value of the node
     def center(intervals)
-      fs = intervals.sort_by{|x|x.first}
-      fs[fs.length/2].first
+      i = intervals.reduce([intervals.first.first, intervals.first.last]) { |acc, int| [[acc.first, int.first].min, [acc.last, int.last].max] }
+      i.first + (i.last - i.first) / 2
     end
 
     def point_search(node, point, result)
       node.s_center.each do |k|
-        result << k if (k.first <= point) && (point < k.last)
+        if k.include?(point)
+          result << k
+        end
       end
-      if node.left_node && ( point < node.left_node.s_max )
+      if node.left_node && ( point < node.x_center )
         point_search(node.left_node, point, []).each{|k|result << k}
       end
-      if node.right_node && ( node.right_node.x_center <= point )
+      if node.right_node && ( point >= node.x_center )
         point_search(node.right_node, point, []).each{|k|result << k}
       end
       result.uniq
@@ -121,12 +123,11 @@ module IntervalTree
   class Node
     def initialize(x_center, s_center, left_node, right_node)
       @x_center = x_center
-      @s_center = s_center.sort_by(&:first)
-      @s_max = s_center.map(&:last).max
+      @s_center = s_center
       @left_node = left_node
       @right_node = right_node
     end
-    attr_reader :x_center, :s_center, :s_max, :left_node, :right_node
+    attr_reader :x_center, :s_center, :left_node, :right_node
   end # class Node
 
 end # module IntervalTree

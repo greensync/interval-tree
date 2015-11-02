@@ -1,4 +1,10 @@
+PATH
+  remote: .
+  specs:
+    interval_tree (0.1.0)
+
 GEM
+  remote: https://rubygems.org/
   specs:
     diff-lcs (1.1.3)
     rspec (2.11.0)
@@ -14,4 +20,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rspec
+  interval_tree!
+  rspec (~> 2.11)
+
+BUNDLED WITH
+   1.10.4
