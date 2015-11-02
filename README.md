@@ -39,6 +39,8 @@ converted to half-closed intervals.
 
 # Copyright
 **Author**: MISHIMA, Hiroyuki ( https://github.com/misshie ),  Simeon Simeonov ( https://github.com/ssimeonov ), Carlos Alonso ( https://github.com/calonso ).
+
 **Copyright**: (c) 2011-2015 MISHIMA, Hiroyuki; Simeon Simeonov; Carlos Alonso  
+
 **License**: The MIT/X11 license
 
