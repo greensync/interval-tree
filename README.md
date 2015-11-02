@@ -3,7 +3,8 @@ An implementation of the augmented interval tree algorithm in Ruby
 
 # See also
 * description in Wikipedia http://en.wikipedia.org/wiki/Interval_tree
-* an implementation in Python by Tyler Kahn http://forrst.com/posts/Interval_Tree_implementation_in_python-e0K    
+* an implementation in Python by Tyler Kahn http://forrst.com/posts/Interval_Tree_implementation_in_python-e0K (broken link)
+
 # ChanegLog
 
 ### 2014-11-02, contribution by Carlos Alonso ( https://github.com/calonso )
