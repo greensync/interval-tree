@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    interval_tree (0.1.0)
+    augmented_interval_tree (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -20,8 +20,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  interval_tree!
+  augmented_interval_tree!
   rspec (~> 2.11)
 
 BUNDLED WITH
-   1.10.4
+   1.10.6
