@@ -10,7 +10,7 @@ An implementation of the augmented interval tree algorithm in Ruby
 ### 2015-11-02, contribution by Carlos Alonso ( https://github.com/calonso )
 * Improved centering
 * Fixed searching: With some use cases with very large trees, the library fails to find intervals.
-* Added rubygems structure to be able to be pushed ad a gem  
+* Added rubygems structure to be able to be pushed as a gem  
 
 ### 2013-04-06, contribution by Simeon Simeonov ( https://github.com/ssimeonov )
 * **Range factory**: The current design allows for Range-compatible elements to be added except for the case where `Tree#ensure_exclusive_end` constructs a Range in a private method. In keeping with good design practices of containers such as Hash, this pull requests allows for a custom range factory to be provided to `Tree#initialize` while maintaining perfect backward compatibility.
