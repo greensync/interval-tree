@@ -18,6 +18,12 @@ Search in empty trees failing
 * Adds a nil guard in `Tree#search` to protect against empty tree searches failing.
 * **Cosmetic improvements**: Language & whitespace in specs, Gemfile addition, and .gitignore update
 
+# Install
+
+```bash
+$ gem install augmented_interval_tree
+```
+
 # Usage
 See spec/interval_tree_spec.rb for details.
 ```ruby
