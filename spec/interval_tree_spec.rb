@@ -89,7 +89,7 @@ describe "IntervalTree::Tree" do
       end
     end
 
-    context 'given [(1...5)] a point query "3"' do
+    context 'given [(1...5)] and a point query "3"' do
       it 'returns an array of intervals (1...5)]' do
         expect(IntervalTree::Tree.new([1...5]).search(3)).to be == [1...5]
       end
@@ -141,8 +141,8 @@ describe "IntervalTree::Tree" do
       end
     end
 
-    context 'given [(1...3), (3...5)] and a query by 3' do
-      it 'returns [(3...9)]' do
+    context 'given [(1...3), (3...5)] and a query by (3...9)' do
+      it 'returns [(3...5)]' do
         results = IntervalTree::Tree.new([(1...3), (3...5)]).search(3...9)
         expect(results).to be == [(3...5)]
       end
