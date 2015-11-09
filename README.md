@@ -32,7 +32,7 @@ require "interval_tree"
 itv = [(0...3), (1...4), (3...5),]
 t = IntervalTree::Tree.new(itv)
 p t.search(2)     #=> [0...3, 1...4]
-p t.search(1...3) #=> [0...3, 1...4, 3...5]
+p t.search(1...4) #=> [0...3, 1...4, 3...5]
 ```
 
 # Note
@@ -40,7 +40,7 @@ Result intervals are always returned
 in the "left-closed and right-open" style that can be expressed
 by three-dotted Range object literals (first...last)
 
-Full-closed intervals "(first..last)" for tree are internally
+Two-dotted full-closed intervals "(first..last)" are also accepted and internally
 converted to half-closed intervals.
 
 # Copyright
