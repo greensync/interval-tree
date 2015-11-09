@@ -31,8 +31,8 @@ require "interval_tree"
 
 itv = [(0...3), (1...4), (3...5),]
 t = IntervalTree::Tree.new(itv)
-p t.search(2) => [0...3, 1...4]
-p t.search(1...3) => [0...3, 1...4, 3...5]
+p t.search(2)     #=> [0...3, 1...4]
+p t.search(1...3) #=> [0...3, 1...4, 3...5]
 ```
 
 # Note
