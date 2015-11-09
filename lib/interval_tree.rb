@@ -1,7 +1,7 @@
-#!/usr/local/bin/ruby-1.9
+#!/usr/bin/env ruby
 #
 # Title:: the IntervalTree module using "augmented tree"
-# Author:: MISHIMA, Hiroyuki ( https://github.com/misshie ), 2011
+# Author::   Hiroyuki Mishima, Simeon Simeonov, Carlos Alonso
 # Copyright:: The MIT/X11 license
 #
 # see also ....
@@ -20,13 +20,6 @@
 # note: result intervals are always returned
 # in the "left-closed and right-open" style that can be expressed
 # by three-dotted Range object literals (first...last)
-#
-# ChangeLog:
-# 2013-04-06, contribution by ssimenov ( https://github.com/ssimeonov ):
-#  adding Range factory, a nil guard in Tree#search
-#  cosmetic improvements
-#  Thanks so much!
-#
 
 module IntervalTree
 
@@ -133,5 +126,5 @@ module IntervalTree
 end # module IntervalTree
 
 if  __FILE__ == $0
-  puts "Interval Tree Library"
+  puts "This is the Augmented Interval Tree library."
 end
