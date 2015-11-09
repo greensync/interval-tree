@@ -1,6 +1,2 @@
-Bundler.setup
-Bundler.require :test
-
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'interval_tree'
