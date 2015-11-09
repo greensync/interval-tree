@@ -38,9 +38,9 @@ p t.search(1...4) #=> [0...3, 1...4, 3...5]
 # Note
 Result intervals are always returned
 in the "left-closed and right-open" style that can be expressed
-by three-dotted Range object literals (first...last)
+by three-dotted Range object literals `(first...last)`
 
-Two-dotted full-closed intervals "(first..last)" are also accepted and internally
+Two-dotted full-closed intervals `(first..last)` are also accepted and internally
 converted to half-closed intervals.
 
 # Copyright
