@@ -52,8 +52,10 @@ module IntervalTree
                divide_intervals(s_left), divide_intervals(s_right))
     end
 
+    DEFAULT_OPTIONS = {unique: true}
+    def search(interval, options = {})
+      options = DEFAULT_OPTIONS.merge(options)
 
-    def search(interval)
       return nil unless @top_node
       if interval.respond_to?(:first)
         first = interval.first
@@ -71,7 +73,7 @@ module IntervalTree
         end
         result.sort_by{|x|[x.first, x.last]}
       else
-        point_search(self.top_node, first, []).sort_by{|x|[x.first, x.last]}
+        point_search(self.top_node, first, [], options[:unique]).sort_by{|x|[x.first, x.last]}
       end
     end
 
@@ -97,7 +99,7 @@ module IntervalTree
       i.first + (i.last - i.first) / 2
     end
 
-    def point_search(node, point, result)
+    def point_search(node, point, result, unique = true)
       node.s_center.each do |k|
         if k.include?(point)
           result << k
@@ -109,7 +111,11 @@ module IntervalTree
       if node.right_node && ( point >= node.x_center )
         point_search(node.right_node, point, []).each{|k|result << k}
       end
-      result.uniq
+      if unique
+        result.uniq
+      else
+        result
+      end
     end
   end # class Tree
 

@@ -163,6 +163,22 @@ describe "IntervalTree::Tree" do
         expect(results).to be == [(3...5), (3...9), (4...8)]
       end
     end
+
+    context 'with unique: false' do
+      context 'given [(1...3), (1...3), (2...4), (1...3)]' do
+        it 'returns [(1...3), (1...3), (1...3)]' do
+          itvs = [(1...3), (1...3), (2...4), (1...3)]
+          results = IntervalTree::Tree.new(itvs).search(1, unique: false)
+          expect(results).to match_array([(1...3), (1...3), (1...3)])
+        end
+
+        it 'returns [(2..4)]' do
+          itvs = [(1...3), (1...3), (2...4), (1...3)]
+          results = IntervalTree::Tree.new(itvs).search(3, unique: false)
+          expect(results).to match_array([(2...4)])
+        end
+      end
+    end
   end
 
 end
