@@ -1,4 +1,4 @@
-# IntervalTree
+# IntervalTree vesion 0.1.1
 An implementation of the augmented interval tree algorithm in Ruby
 
 # See also
@@ -6,6 +6,9 @@ An implementation of the augmented interval tree algorithm in Ruby
 * an implementation in Python by Tyler Kahn http://forrst.com/posts/Interval_Tree_implementation_in_python-e0K (broken link)
 
 # ChanegLog
+
+### 2017-05-12, contribution by Sam Davies ( https://github.com/samphilipd )
+* User can specify an option in search `unique: false` if s/he wants multiple matches to be returened.
 
 ### 2015-11-02, contribution by Carlos Alonso ( https://github.com/calonso )
 * Improved centering
@@ -47,7 +50,6 @@ converted to half-closed intervals.
 # Copyright
 **Author**: MISHIMA, Hiroyuki ( https://github.com/misshie ),  Simeon Simeonov ( https://github.com/ssimeonov ), Carlos Alonso ( https://github.com/calonso ).
 
-**Copyright**: (c) 2011-2015 MISHIMA, Hiroyuki; Simeon Simeonov; Carlos Alonso
+**Copyright**: (c) 2011-2017 MISHIMA, Hiroyuki; Simeon Simeonov; Carlos Alonsol; Sam Davies
 
 **License**: The MIT/X11 license
-

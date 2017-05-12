@@ -165,13 +165,15 @@ describe "IntervalTree::Tree" do
     end
 
     context 'with unique: false' do
-      context 'given [(1...3), (1...3), (2...4), (1...3)]' do
+      context 'given [(1...3), (1...3), (2...4), (1...3)] and a query by (1)' do
         it 'returns [(1...3), (1...3), (1...3)]' do
           itvs = [(1...3), (1...3), (2...4), (1...3)]
           results = IntervalTree::Tree.new(itvs).search(1, unique: false)
           expect(results).to match_array([(1...3), (1...3), (1...3)])
         end
-
+      end
+      
+      context 'given [(1...3), (1...3), (2...4), (1...3)] and a query by (3)' do
         it 'returns [(2..4)]' do
           itvs = [(1...3), (1...3), (2...4), (1...3)]
           results = IntervalTree::Tree.new(itvs).search(3, unique: false)
@@ -180,5 +182,5 @@ describe "IntervalTree::Tree" do
       end
     end
   end
-
+  
 end

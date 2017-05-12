@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 #
 # Title:: the IntervalTree module using "augmented tree"
-# Author::   Hiroyuki Mishima, Simeon Simeonov, Carlos Alonso
+# Author::   Hiroyuki Mishima, Simeon Simeonov, Carlos Alonso, Sam Davies
 # Copyright:: The MIT/X11 license
 #
 # see also ....
