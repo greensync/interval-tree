@@ -48,7 +48,7 @@ Two-dotted full-closed intervals `(first..last)` are also accepted and internall
 converted to half-closed intervals.
 
 # Copyright
-**Author**: MISHIMA, Hiroyuki ( https://github.com/misshie ),  Simeon Simeonov ( https://github.com/ssimeonov ), Carlos Alonso ( https://github.com/calonso ).
+**Author**: MISHIMA, Hiroyuki ( https://github.com/misshie ),  Simeon Simeonov ( https://github.com/ssimeonov ), Carlos Alonso ( https://github.com/calonso ), Sam Davies ( https://github.com/samphilipd ).
 
 **Copyright**: (c) 2011-2017 MISHIMA, Hiroyuki; Simeon Simeonov; Carlos Alonsol; Sam Davies
 
