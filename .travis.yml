@@ -4,6 +4,5 @@ cache: bundler
 rvm:
   - 1.9.3
   - ruby-head
-  - jruby-head
 script:
   bundle exec rspec
