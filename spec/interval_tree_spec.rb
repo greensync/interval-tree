@@ -180,6 +180,14 @@ describe "IntervalTree::Tree" do
           expect(results).to match_array([(2...4)])
         end
       end
+
+      context 'given [(1...3), (1...3)] and a query by (1...3)' do
+        it 'returns [(2..4)]' do
+          itvs = [(1...3), (1...3)]
+          results = IntervalTree::Tree.new(itvs).search(1...3, unique: false)
+          expect(results).to match_array([(1...3), (1...3)])
+        end
+      end
     end
   end
   

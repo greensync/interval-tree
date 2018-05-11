@@ -69,7 +69,7 @@ module IntervalTree
         result = Array.new
         (first...last).each do |j|
           search(j).each{|k|result << k}
-          result.uniq!
+          options[:unique] ? result.uniq! : result
         end
         result.sort_by{|x|[x.first, x.last]}
       else

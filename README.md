@@ -5,10 +5,14 @@ An implementation of the augmented interval tree algorithm in Ruby
 * description in Wikipedia http://en.wikipedia.org/wiki/Interval_tree
 * an implementation in Python by Tyler Kahn http://forrst.com/posts/Interval_Tree_implementation_in_python-e0K (broken link)
 
-# ChanegLog
+# ChangeLog
+
+### 2018-05-11, contribution by Mikkel Refsgaard Bech ( https://github.com/MikkelRBech )
+* Fixed searching with a range and `unique: false` to return all results
+* Typos
 
 ### 2017-05-12, contribution by Sam Davies ( https://github.com/samphilipd )
-* User can specify an option in search `unique: false` if s/he wants multiple matches to be returened.
+* User can specify an option in search `unique: false` if s/he wants multiple matches to be returned.
 
 ### 2015-11-02, contribution by Carlos Alonso ( https://github.com/calonso )
 * Improved centering
