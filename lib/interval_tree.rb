@@ -52,28 +52,17 @@ module IntervalTree
                divide_intervals(s_left), divide_intervals(s_right))
     end
 
+    # Search by range or point
     DEFAULT_OPTIONS = {unique: true}
-    def search(interval, options = {})
+    def search(query, options = {})
       options = DEFAULT_OPTIONS.merge(options)
 
       return nil unless @top_node
-      if interval.respond_to?(:first)
-        first = interval.first
-        last = interval.last
-      else
-        first = interval
-        last = nil
-      end
 
-      if last
-        result = Array.new
-        (first...last).each do |j|
-          search(j).each{|k|result << k}
-          result.uniq!
-        end
-        result.sort_by{|x|[x.first, x.last]}
+      if query.respond_to?(:first)
+        top_node.search(query)
       else
-        point_search(self.top_node, first, [], options[:unique]).sort_by{|x|[x.first, x.last]}
+        point_search(self.top_node, query, [], options[:unique]).sort_by{|x|[x.first, x.last]}
       end
     end
 
@@ -140,10 +129,11 @@ module IntervalTree
       right_node == other.right_node
     end
 
+    # Search by range only
     def search(query)
       search_s_center(query) +
-        (query.begin <= x_center && left_node&.search(query) || []) +
-        (query.end >= x_center && right_node&.search(query) || [])
+        (query.begin < x_center && left_node&.search(query) || []) +
+        (query.end > x_center && right_node&.search(query) || [])
     end
 
     private
