@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "IntervalTree::Node" do
-
   describe '.new' do
     context 'given ([], [], [], [])' do
       it 'returns a Node object' do
@@ -9,11 +8,9 @@ describe "IntervalTree::Node" do
       end
     end
   end
-
 end
 
 describe "IntervalTree::Tree" do
-
   describe '#center' do
     context 'given [(1...5),]' do
       it 'returns 3' do
@@ -72,6 +69,75 @@ describe "IntervalTree::Tree" do
           result = tree.search(2).first
           expect(result).to be_kind_of ValueRange
           expect(result.value).to be == 15
+        end
+      end
+    end
+
+    describe 'dividing intervals' do
+      subject(:tree) do
+        IntervalTree::Tree.new(
+          [
+            10...14,
+            2...20,
+            0...5,
+            0...8,
+            3...6,
+            15...20,
+            16...21,
+            17...25,
+            21...24,
+          ],
+        )
+      end
+
+      let(:node) do
+        IntervalTree::Node.new(
+          12, # x_center
+          [ 10...14, 2...20 ], # s_center
+          left_node, # s_left
+          right_node, # s_right
+        )
+      end
+      let(:left_node) do
+        IntervalTree::Node.new(
+          4, # x_center
+          [ 0...5, 0...8, 3...6 ], # s_center
+          nil, # s_left
+          nil, # s_right
+        )
+      end
+      let(:right_node) do
+        IntervalTree::Node.new(
+          20, # x_center
+          [ 15...20, 16...21, 17...25 ], # s_center
+          nil, # s_left
+          right_node_of_right_node, # s_right
+        )
+      end
+      let(:right_node_of_right_node) do
+        IntervalTree::Node.new(
+          22, # x_center
+          [ 21...24 ], # s_center
+          nil, # s_left
+          nil, # s_right
+        )
+      end
+
+      context 'given a set of intervals' do
+        it 'divides everything correctly' do
+          expect(tree.top_node).to eq(node)
+        end
+
+        it 'divides into a left node correctly' do
+          expect(tree.top_node.left_node).to eq(left_node)
+        end
+
+        it 'divides into a right node correctly' do
+          expect(tree.top_node.right_node).to eq(right_node)
+        end
+
+        it 'divides the right node into a right node correctly' do
+          expect(tree.top_node.right_node.right_node).to eq(right_node_of_right_node)
         end
       end
     end
@@ -172,7 +238,7 @@ describe "IntervalTree::Tree" do
           expect(results).to match_array([(1...3), (1...3), (1...3)])
         end
       end
-      
+
       context 'given [(1...3), (1...3), (2...4), (1...3)] and a query by (3)' do
         it 'returns [(2..4)]' do
           itvs = [(1...3), (1...3), (2...4), (1...3)]
@@ -182,5 +248,4 @@ describe "IntervalTree::Tree" do
       end
     end
   end
-  
 end

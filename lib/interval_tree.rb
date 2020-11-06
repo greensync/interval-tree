@@ -77,6 +77,10 @@ module IntervalTree
       end
     end
 
+    def ==(other)
+      top_node == other.top_node
+    end
+
     private
 
     def ensure_exclusive_end(ranges, range_factory)
@@ -128,6 +132,13 @@ module IntervalTree
       @right_node = right_node
     end
     attr_reader :x_center, :s_center, :left_node, :right_node
+
+    def ==(other)
+      x_center == other.x_center &&
+      s_center == other.s_center &&
+      left_node == other.left_node &&
+      right_node == other.right_node
+    end
   end # class Node
 
 end # module IntervalTree
