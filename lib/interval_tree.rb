@@ -139,6 +139,36 @@ module IntervalTree
       left_node == other.left_node &&
       right_node == other.right_node
     end
+
+    def search(query)
+      search_s_center(query) +
+        (query.begin <= x_center && left_node&.search(query) || []) +
+        (query.end >= x_center && right_node&.search(query) || [])
+    end
+
+    private
+
+    def search_s_center(query)
+      s_center.select do |k|
+        (
+          # k is entirely contained within the query
+          (k.begin >= query.begin) &&
+          (k.end <= query.end)
+        ) || (
+          # k's start overlaps with the query
+          (k.begin >= query.begin) &&
+          (k.begin < query.end)
+        ) || (
+          # k's end overlaps with the query
+          (k.end > query.begin) &&
+          (k.end <= query.end)
+        ) || (
+          # k is bigger than the query
+          (k.begin < query.begin) &&
+          (k.end > query.end)
+        )
+      end
+    end
   end # class Node
 
 end # module IntervalTree
