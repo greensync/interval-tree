@@ -92,11 +92,12 @@ module IntervalTree
       end
     end
 
-    # augmented tree
-    # using a start point as resresentative value of the node
+    # Note: Floors the result
     def center(intervals)
-      i = intervals.reduce([intervals.first.first, intervals.first.last]) { |acc, int| [[acc.first, int.first].min, [acc.last, int.last].max] }
-      i.first + (i.last - i.first) / 2
+      (
+        intervals.map(&:begin).min +
+        intervals.map(&:end).max
+      ) / 2
     end
 
     def point_search(node, point, result, unique = true)
