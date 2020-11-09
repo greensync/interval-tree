@@ -39,10 +39,12 @@ module IntervalTree
       return nil unless @top_node
 
       if query.respond_to?(:first)
-        top_node.search(query)
+        result = top_node.search(query)
+        options[:unique] ? result.uniq : result
       else
-        point_search(self.top_node, query, [], options[:unique]).sort_by{|x|[x.first, x.last]}
+        point_search(self.top_node, query, [], options[:unique])
       end
+        .sort_by{|x|[x.first, x.last]}
     end
 
     def ==(other)

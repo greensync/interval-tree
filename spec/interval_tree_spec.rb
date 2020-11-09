@@ -276,6 +276,17 @@ describe "IntervalTree::Tree" do
       end
     end
 
+    context 'with unique defaulting to true' do
+      context 'given intervals with duplicates' do
+        it 'returns the duplicates in the result' do
+          itv = [(0...3), (1...4), (3...5), (0...3)]
+          t = IntervalTree::Tree.new(itv)
+          results = t.search(2)
+          expect(results).to match_array([0...3, 1...4])
+        end
+      end
+    end
+
     context 'with unique: false' do
       context 'given [(1...3), (1...3), (2...4), (1...3)] and a query by (1)' do
         it 'returns [(1...3), (1...3), (1...3)]' do
