@@ -19,9 +19,9 @@ module IntervalTree
 
       intervals.each do |k|
         case
-        when k.last < x_center
+        when k.last.to_r < x_center
           s_left << k
-        when k.first > x_center
+        when k.first.to_r > x_center
           s_right << k
         else
           s_center << k
@@ -66,11 +66,10 @@ module IntervalTree
       end
     end
 
-    # Note: Floors the result
     def center(intervals)
       (
-        intervals.map(&:begin).min +
-        intervals.map(&:end).max
+        intervals.map(&:begin).min.to_r +
+        intervals.map(&:end).max.to_r
       ) / 2
     end
 
@@ -80,10 +79,10 @@ module IntervalTree
           result << k
         end
       end
-      if node.left_node && ( point < node.x_center )
+      if node.left_node && ( point.to_r < node.x_center )
         point_search(node.left_node, point, []).each{|k|result << k}
       end
-      if node.right_node && ( point >= node.x_center )
+      if node.right_node && ( point.to_r >= node.x_center )
         point_search(node.right_node, point, []).each{|k|result << k}
       end
       if unique
@@ -113,8 +112,8 @@ module IntervalTree
     # Search by range only
     def search(query)
       search_s_center(query) +
-        (query.begin < x_center && left_node&.search(query) || []) +
-        (query.end > x_center && right_node&.search(query) || [])
+        (query.begin.to_r < x_center && left_node&.search(query) || []) +
+        (query.end.to_r > x_center && right_node&.search(query) || [])
     end
 
     private

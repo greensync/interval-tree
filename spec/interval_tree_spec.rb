@@ -62,7 +62,7 @@ describe "IntervalTree::Tree" do
       it 'returns 3' do
         itvs = [(1...5),]
         t = IntervalTree::Tree.new([])
-        expect(t.__send__(:center, itvs)).to be == 3
+        expect(t.__send__(:center, itvs)).to be == 3.0
 
       end
     end
@@ -71,7 +71,7 @@ describe "IntervalTree::Tree" do
       it 'returns 3' do
         itvs = [(1...5), (2...6),]
         t = IntervalTree::Tree.new([])
-        expect(t.__send__(:center, itvs)).to be == 3
+        expect(t.__send__(:center, itvs)).to be == 3.5
       end
     end
   end
@@ -88,7 +88,7 @@ describe "IntervalTree::Tree" do
       it 'returns ret.top_node.x_centeran == 4' do
         itvs = [(1...5), (2...6), (3...7)]
         tree = IntervalTree::Tree.new(itvs)
-        expect(tree.top_node.x_center).to be == 4
+        expect(tree.top_node.x_center).to be == 4.0
       end
     end
 
@@ -96,7 +96,7 @@ describe "IntervalTree::Tree" do
       it 'returns ret.top_node.x_centeran == 4 ' do
         itvs = [(1..5), (2..6), (3..7)]
         tree = IntervalTree::Tree.new(itvs)
-        expect(tree.top_node.x_center).to be == 4
+        expect(tree.top_node.x_center).to be == 4.5
       end
     end
 
@@ -138,7 +138,7 @@ describe "IntervalTree::Tree" do
 
       let(:node) do
         IntervalTree::Node.new(
-          12, # x_center
+          12.5, # x_center
           [ 10...14, 2...20 ], # s_center
           left_node, # s_left
           right_node, # s_right
@@ -162,7 +162,7 @@ describe "IntervalTree::Tree" do
       end
       let(:right_node_of_right_node) do
         IntervalTree::Node.new(
-          22, # x_center
+          22.5, # x_center
           [ 21...24 ], # s_center
           nil, # s_left
           nil, # s_right
@@ -317,6 +317,15 @@ describe "IntervalTree::Tree" do
 
           expect(b - a).to be_within(0.05).of(0)
         end
+      end
+    end
+
+    context 'when using time ranges' do
+      it 'still works' do
+        itvs = [Time.utc(2020, 11, 1)...Time.utc(2020, 11, 20)]
+        needle = Time.utc(2020, 11, 5)...Time.utc(2020, 11, 6)
+        results = IntervalTree::Tree.new(itvs).search(needle)
+        expect(results).to eq(itvs)
       end
     end
   end
