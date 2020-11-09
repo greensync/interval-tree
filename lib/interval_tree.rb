@@ -112,8 +112,8 @@ module IntervalTree
     # Search by range only
     def search(query)
       search_s_center(query) +
-        (query.begin.to_r < x_center && left_node&.search(query) || []) +
-        (query.end.to_r > x_center && right_node&.search(query) || [])
+        (left_node && query.begin.to_r < x_center && left_node.search(query) || []) +
+        (right_node && query.end.to_r > x_center && right_node.search(query) || [])
     end
 
     private
