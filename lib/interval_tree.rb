@@ -1,25 +1,4 @@
 #!/usr/bin/env ruby
-#
-# Title:: the IntervalTree module using "augmented tree"
-# Author::   Hiroyuki Mishima, Simeon Simeonov, Carlos Alonso, Sam Davies
-# Copyright:: The MIT/X11 license
-#
-# see also ....
-#  description in Wikipedia
-#    http://en.wikipedia.org/wiki/Interval_tree
-#  implementation in Python by Tyler Kahn
-#    http://forrst.com/posts/Interval_Tree_implementation_in_python-e0K
-#
-# Usage:
-#  require "interval_tree"
-#  itv = [(0...3), (1...4), (3...5),]
-#  t = IntervalTree::Tree.new(itv)
-#  p t.search(2) => [0...3, 1...4]
-#  p t.search(1...3) => [0...3, 1...4, 3...5]
-#
-# note: result intervals are always returned
-# in the "left-closed and right-open" style that can be expressed
-# by three-dotted Range object literals (first...last)
 
 module IntervalTree
 
