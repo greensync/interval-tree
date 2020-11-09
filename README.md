@@ -2,6 +2,8 @@
 
 An implementation of the centered interval tree algorithm in Ruby.
 
+This is a fork of [https://github.com/misshie/interval-tree] until our (performance related PR)[https://github.com/misshie/interval-tree/pull/8] gets merged.
+
 ## See also
 
 * description in Wikipedia http://en.wikipedia.org/wiki/Interval_tree
@@ -33,7 +35,7 @@ Search in empty trees failing
 ## Install
 
 ```bash
-$ gem install augmented_interval_tree
+$ gem install fast_interval_tree
 ```
 
 ## Usage

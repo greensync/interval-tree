@@ -1,12 +1,13 @@
 PATH
   remote: .
   specs:
-    augmented_interval_tree (0.1.1)
+    fast_interval_tree (0.2.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.3)
+    rake (10.5.0)
     rspec (2.99.0)
       rspec-core (~> 2.99.0)
       rspec-expectations (~> 2.99.0)
@@ -20,8 +21,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  augmented_interval_tree!
+  fast_interval_tree!
+  rake (~> 10)
   rspec (~> 2.11)
 
 BUNDLED WITH
-   1.14.2
+   1.17.3
