@@ -42,7 +42,7 @@ require "interval_tree"
 itv = [(0...3), (1...4), (3...5), (0...3)]
 t = IntervalTree::Tree.new(itv)
 p t.search(2)     #=> [0...3, 1...4]
-p t.search(2, unique: false) #=> [0...3, 1...4, 0...3]
+p t.search(2, unique: false) #=> [0...3, 0...3, 1...4]
 p t.search(1...4) #=> [0...3, 1...4, 3...5]
 ```
 
