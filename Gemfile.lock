@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fast_interval_tree (0.2.0)
+    fast_interval_tree (0.2.1)
 
 GEM
   remote: https://rubygems.org/
