@@ -293,5 +293,20 @@ describe "IntervalTree::Tree" do
         end
       end
     end
+
+    context "when concerned with performance" do
+      context "with a small search space of very large ranges" do
+        it "should still be fast" do
+          itvs = [1...10_000_000]
+          needle = 5_000_001...15_000_000
+
+          a = Time.now
+          results = IntervalTree::Tree.new(itvs).search(needle)
+          b = Time.now
+
+          expect(b - a).to be_within(0.05).of(0)
+        end
+      end
+    end
   end
 end
