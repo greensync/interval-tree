@@ -9,6 +9,10 @@ An implementation of the centered interval tree algorithm in Ruby.
 
 ## ChangeLog
 
+### 2020-11-09, contribution by Brendan Weibrecht, Chris Nankervis and Thomas van der Pol
+
+* Substantially improved performance when supplied with a large range as the search query.
+
 ### 2017-05-12, contribution by Sam Davies ( https://github.com/samphilipd )
 
 * User can specify an option in search `unique: false` if s/he wants multiple matches to be returned.
@@ -57,8 +61,8 @@ converted to half-closed intervals.
 
 ## Copyright
 
-**Author**: MISHIMA, Hiroyuki ( https://github.com/misshie ),  Simeon Simeonov ( https://github.com/ssimeonov ), Carlos Alonso ( https://github.com/calonso ), Sam Davies ( https://github.com/samphilipd ).
+**Author**: MISHIMA, Hiroyuki ( https://github.com/misshie ),  Simeon Simeonov ( https://github.com/ssimeonov ), Carlos Alonso ( https://github.com/calonso ), Sam Davies ( https://github.com/samphilipd ), Brendan Weibrecht (https://github.com/ZimbiX), Chris Nankervis (https://github.com/chrisnankervis), Thomas van der Pol (https://github.com/tvanderpol).
 
-**Copyright**: (c) 2011-2017 MISHIMA, Hiroyuki; Simeon Simeonov; Carlos Alonsol; Sam Davies
+**Copyright**: (c) 2011-2020 MISHIMA, Hiroyuki; Simeon Simeonov; Carlos Alonsol; Sam Davies; Brendan Weibrecht; Chris Nankervis; Thomas van der Pol
 
 **License**: The MIT/X11 license
