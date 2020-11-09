@@ -1,6 +1,6 @@
 # IntervalTree
 
-An implementation of the augmented interval tree algorithm in Ruby
+An implementation of the centered interval tree algorithm in Ruby.
 
 ## See also
 
