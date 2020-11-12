@@ -142,7 +142,3 @@ module IntervalTree
   end # class Node
 
 end # module IntervalTree
-
-if  __FILE__ == $0
-  puts "This is the Augmented Interval Tree library."
-end
