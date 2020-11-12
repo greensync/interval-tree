@@ -1,25 +1,4 @@
 #!/usr/bin/env ruby
-#
-# Title:: the IntervalTree module using "augmented tree"
-# Author::   Hiroyuki Mishima, Simeon Simeonov, Carlos Alonso, Sam Davies
-# Copyright:: The MIT/X11 license
-#
-# see also ....
-#  description in Wikipedia
-#    http://en.wikipedia.org/wiki/Interval_tree
-#  implementation in Python by Tyler Kahn
-#    http://forrst.com/posts/Interval_Tree_implementation_in_python-e0K
-#
-# Usage:
-#  require "interval_tree"
-#  itv = [(0...3), (1...4), (3...5),]
-#  t = IntervalTree::Tree.new(itv)
-#  p t.search(2) => [0...3, 1...4]
-#  p t.search(1...3) => [0...3, 1...4, 3...5]
-#
-# note: result intervals are always returned
-# in the "left-closed and right-open" style that can be expressed
-# by three-dotted Range object literals (first...last)
 
 module IntervalTree
 
@@ -40,9 +19,9 @@ module IntervalTree
 
       intervals.each do |k|
         case
-        when k.last < x_center
+        when k.last.to_r < x_center
           s_left << k
-        when k.first > x_center
+        when k.first.to_r > x_center
           s_right << k
         else
           s_center << k
@@ -52,29 +31,24 @@ module IntervalTree
                divide_intervals(s_left), divide_intervals(s_right))
     end
 
+    # Search by range or point
     DEFAULT_OPTIONS = {unique: true}
-    def search(interval, options = {})
+    def search(query, options = {})
       options = DEFAULT_OPTIONS.merge(options)
 
       return nil unless @top_node
-      if interval.respond_to?(:first)
-        first = interval.first
-        last = interval.last
-      else
-        first = interval
-        last = nil
-      end
 
-      if last
-        result = Array.new
-        (first...last).each do |j|
-          search(j).each{|k|result << k}
-          result.uniq!
-        end
-        result.sort_by{|x|[x.first, x.last]}
+      if query.respond_to?(:first)
+        result = top_node.search(query)
+        options[:unique] ? result.uniq : result
       else
-        point_search(self.top_node, first, [], options[:unique]).sort_by{|x|[x.first, x.last]}
+        point_search(self.top_node, query, [], options[:unique])
       end
+        .sort_by{|x|[x.first, x.last]}
+    end
+
+    def ==(other)
+      top_node == other.top_node
     end
 
     private
@@ -92,11 +66,11 @@ module IntervalTree
       end
     end
 
-    # augmented tree
-    # using a start point as resresentative value of the node
     def center(intervals)
-      i = intervals.reduce([intervals.first.first, intervals.first.last]) { |acc, int| [[acc.first, int.first].min, [acc.last, int.last].max] }
-      i.first + (i.last - i.first) / 2
+      (
+        intervals.map(&:begin).min.to_r +
+        intervals.map(&:end).max.to_r
+      ) / 2
     end
 
     def point_search(node, point, result, unique = true)
@@ -105,10 +79,10 @@ module IntervalTree
           result << k
         end
       end
-      if node.left_node && ( point < node.x_center )
+      if node.left_node && ( point.to_r < node.x_center )
         point_search(node.left_node, point, []).each{|k|result << k}
       end
-      if node.right_node && ( point >= node.x_center )
+      if node.right_node && ( point.to_r >= node.x_center )
         point_search(node.right_node, point, []).each{|k|result << k}
       end
       if unique
@@ -127,6 +101,44 @@ module IntervalTree
       @right_node = right_node
     end
     attr_reader :x_center, :s_center, :left_node, :right_node
+
+    def ==(other)
+      x_center == other.x_center &&
+      s_center == other.s_center &&
+      left_node == other.left_node &&
+      right_node == other.right_node
+    end
+
+    # Search by range only
+    def search(query)
+      search_s_center(query) +
+        (left_node && query.begin.to_r < x_center && left_node.search(query) || []) +
+        (right_node && query.end.to_r > x_center && right_node.search(query) || [])
+    end
+
+    private
+
+    def search_s_center(query)
+      s_center.select do |k|
+        (
+          # k is entirely contained within the query
+          (k.begin >= query.begin) &&
+          (k.end <= query.end)
+        ) || (
+          # k's start overlaps with the query
+          (k.begin >= query.begin) &&
+          (k.begin < query.end)
+        ) || (
+          # k's end overlaps with the query
+          (k.end > query.begin) &&
+          (k.end <= query.end)
+        ) || (
+          # k is bigger than the query
+          (k.begin < query.begin) &&
+          (k.end > query.end)
+        )
+      end
+    end
   end # class Node
 
 end # module IntervalTree
