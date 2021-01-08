@@ -2,30 +2,27 @@
 
 An implementation of the centered interval tree algorithm in Ruby.
 
-This is a fork of [https://github.com/misshie/interval-tree] until our (performance related PR)[https://github.com/misshie/interval-tree/pull/8] gets merged.
-
 ## See also
 
-* description in Wikipedia http://en.wikipedia.org/wiki/Interval_tree
-* an implementation in Python by Tyler Kahn http://forrst.com/posts/Interval_Tree_implementation_in_python-e0K (broken link)
+* [A description of the algorithm in Wikipedia](http://en.wikipedia.org/wiki/Interval_tree)
 
 ## ChangeLog
 
-### 2020-11-09, contribution by Brendan Weibrecht, Chris Nankervis and Thomas van der Pol
+### 2020-11-09, contribution by [Brendan Weibrecht](https://github.com/ZimbiX), [Chris Nankervis](https://github.com/chrisnankervis) and [Thomas van der Pol](https://github.com/tvanderpol)
 
 * Substantially improved performance when supplied with a large range as the search query.
 
-### 2017-05-12, contribution by Sam Davies ( https://github.com/samphilipd )
+### 2017-05-12, contribution by [Sam Davies](https://github.com/samphilipd)
 
 * User can specify an option in search `unique: false` if s/he wants multiple matches to be returned.
 
-### 2015-11-02, contribution by Carlos Alonso ( https://github.com/calonso )
+### 2015-11-02, contribution by [Carlos Alonso](https://github.com/calonso)
 
 * Improved centering
 * Fixed searching: With some use cases with very large trees, the library fails to find intervals.
 * Added rubygems structure to be able to be pushed as a gem
 
-### 2013-04-06, contribution by Simeon Simeonov ( https://github.com/ssimeonov )
+### 2013-04-06, contribution by [Simeon Simeonov](https://github.com/ssimeonov)
 
 * **Range factory**: The current design allows for Range-compatible elements to be added except for the case where `Tree#ensure_exclusive_end` constructs a Range in a private method. In keeping with good design practices of containers such as Hash, this pull requests allows for a custom range factory to be provided to `Tree#initialize` while maintaining perfect backward compatibility.
 Search in empty trees failing
