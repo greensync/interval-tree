@@ -100,6 +100,16 @@ describe "IntervalTree::Tree" do
       end
     end
 
+    context 'with custom objects' do
+      CustomStruct = Struct.new(:begin, :end, :value)
+      context 'given [CustomStruct.new(1, 6, "value one"), CustomStruct.new(5, 11, "value two")]' do
+        it 'does not raise an exception' do
+          itvs = [CustomStruct.new(1, 6, "value one"), CustomStruct.new(5, 11, "value two")]
+          expect {IntervalTree::Tree.new(itvs)}.not_to raise_exception
+        end
+      end
+    end
+
     context 'with a custom range factory' do
       class ValueRange < Range
         attr_accessor :value
@@ -326,6 +336,39 @@ describe "IntervalTree::Tree" do
         needle = Time.utc(2020, 11, 5)...Time.utc(2020, 11, 6)
         results = IntervalTree::Tree.new(itvs).search(needle)
         expect(results).to eq(itvs)
+      end
+    end
+
+    context 'when using custom objects' do
+      CustomStruct = Struct.new(:begin, :end, :value)
+      context 'given [CustomStruct.new(1, 6, "value one"), CustomStruct.new(5, 11, "value two")]' do
+        it 'can search by point' do
+          itvs = [CustomStruct.new(1, 6, "value one"), CustomStruct.new(5, 11, "value two")]
+          tree = IntervalTree::Tree.new(itvs)
+          result = tree.search(2)
+          expect(result).to be_kind_of Array
+          item = result.first
+          expect(item).to be_kind_of CustomStruct
+          expect(item.value).to be == "value one"
+        end
+
+        it 'can search by range' do
+          itvs = [CustomStruct.new(1, 6, "value one"), CustomStruct.new(5, 11, "value two")]
+          tree = IntervalTree::Tree.new(itvs)
+          result = tree.search(4...7)
+          expect(result).to be == itvs
+          result = tree.search(9...20)
+          expect(result).to be_kind_of Array
+          item = result.first
+          expect(item).to be == CustomStruct.new(5, 11, "value two")
+        end
+
+        it 'can search by the custom object' do
+          itvs = [CustomStruct.new(1, 6, "value one"), CustomStruct.new(5, 11, "value two")]
+          tree = IntervalTree::Tree.new(itvs)
+          result = tree.search(CustomStruct.new(4,7))
+          expect(result).to be == itvs
+        end
       end
     end
   end

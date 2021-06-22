@@ -75,7 +75,7 @@ module IntervalTree
 
     def point_search(node, point, result, unique = true)
       node.s_center.each do |k|
-        if k.include?(point)
+        if k.begin <= point && point < k.end
           result << k
         end
       end
