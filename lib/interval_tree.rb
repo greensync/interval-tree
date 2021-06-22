@@ -19,9 +19,9 @@ module IntervalTree
 
       intervals.each do |k|
         case
-        when k.last.to_r < x_center
+        when k.end.to_r < x_center
           s_left << k
-        when k.first.to_r > x_center
+        when k.begin.to_r > x_center
           s_right << k
         else
           s_center << k
@@ -38,13 +38,13 @@ module IntervalTree
 
       return nil unless @top_node
 
-      if query.respond_to?(:first)
+      if query.respond_to?(:begin)
         result = top_node.search(query)
         options[:unique] ? result.uniq : result
       else
         point_search(self.top_node, query, [], options[:unique])
       end
-        .sort_by{|x|[x.first, x.last]}
+        .sort_by{|x|[x.begin, x.end]}
     end
 
     def ==(other)
@@ -61,7 +61,7 @@ module IntervalTree
         when range.exclude_end?
           range
         else
-          range_factory.call(range.first, range.end)
+          range_factory.call(range.begin, range.end)
         end
       end
     end
