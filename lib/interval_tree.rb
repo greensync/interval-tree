@@ -91,7 +91,7 @@ module IntervalTree
           stack.push(node.right_node)
         end
 
-        end
+      end
       if unique
         result.uniq
       else
