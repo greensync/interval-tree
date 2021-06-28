@@ -85,10 +85,10 @@ module IntervalTree
           end
         end
         if node.left_node && ( point.to_r < node.x_center )
-          stack.push(node.left_node)
+          stack << node.left_node
 
         elsif node.right_node && ( point.to_r >= node.x_center )
-          stack.push(node.right_node)
+          stack << node.right_node
         end
 
       end
