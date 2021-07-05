@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
   s.files = Dir.chdir(File.expand_path(__dir__)) do
-    Dir.glob('{bin,lib}/**/*') + %w[README.md Gemfile Gemfile.lock Rakefile fast_interval_tree.gemspec]
+    Dir.glob('{bin,lib}/**/*') + %w[README.md Gemfile Rakefile fast_interval_tree.gemspec]
   end
   s.require_paths = ['lib']
 
