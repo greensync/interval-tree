@@ -340,7 +340,10 @@ describe "IntervalTree::Tree" do
     end
 
     context 'when using custom objects' do
-      CustomStruct = Struct.new(:begin, :end, :value)
+      before do
+        stub_const('CustomStruct', Struct.new(:begin, :end, :value))
+      end
+
       context 'given [CustomStruct.new(1, 6, "value one"), CustomStruct.new(5, 11, "value two")]' do
         it 'can search by point' do
           itvs = [CustomStruct.new(1, 6, "value one"), CustomStruct.new(5, 11, "value two")]
