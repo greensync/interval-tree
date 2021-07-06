@@ -1,5 +1,7 @@
 # IntervalTree
 
+![Tests](https://github.com/greensync/interval-tree/actions/workflows/.github/workflows/ruby.yml/badge.svg)
+
 An implementation of the centered interval tree algorithm in Ruby.
 
 ## See also
