@@ -285,10 +285,20 @@ describe "IntervalTree::Tree" do
         expect(results).to be == [(3...5), (3...9), (4...8)]
       end
     end
+    
+    context 'with unique defaulting to true, given intervals with duplicates' do
+      context 'given [(1...3), (3...5), (3...9), (4...8), (4...8)] and a query by (3...5)]' do
+        it 'removes the duplicates in the result' do
+          itv = [(1...3), (3...5), (3...9), (4...8), (4...8)]
+          t = IntervalTree::Tree.new(itv)
+          results = t.search((3...5))
+          
+          expect(results).to match_array([(3...5), (3...9), (4...8)])
+        end
+      end
 
-    context 'with unique defaulting to true' do
-      context 'given intervals with duplicates' do
-        it 'returns the duplicates in the result' do
+      context 'given [(0...3), (1...4), (3...5), (0...3)] and a query by (2)' do
+        it 'removes the duplicates in the result' do
           itv = [(0...3), (1...4), (3...5), (0...3)]
           t = IntervalTree::Tree.new(itv)
           results = t.search(2)
@@ -313,6 +323,31 @@ describe "IntervalTree::Tree" do
           expect(results).to match_array([(2...4)])
         end
       end
+
+      context 'given [(0...5), (1...5), (3...5), (3...5)] and a query by (3)' do
+        it 'returns [(0...5), (1...5), (3...5), (3...5)]' do
+          itvs = [(0...5), (1...5), (3...5), (3...5)]
+          results = IntervalTree::Tree.new(itvs).search(3, unique: false)
+          expect(results).to match_array([(0...5), (1...5), (3...5), (3...5)])
+        end
+      end
+
+      context 'given [(0...3), (1...4), (3...4), (3...4), (3...5)] and a query by (3)' do
+        it 'returns [(1...4), (3...4), (3...4), (3...5)]' do
+          itvs = [(0...3), (1...4), (3...4), (3...4), (3...5)]
+          results = IntervalTree::Tree.new(itvs).search(3, unique: false)
+          expect(results).to match_array([(1...4), (3...4), (3...4), (3...5)])
+        end
+      end
+
+      context 'given [(0...2), (0...2), (1...2), (1...2), (2...5)] and a query by (1)' do
+        it 'returns [(0...2), (0...2), (1...2), (1...2)]' do
+          itvs = [(0...2), (0...2), (1...2), (1...2), (2...5)]
+          results = IntervalTree::Tree.new(itvs).search(1, unique: false)
+          expect(results).to match_array([(0...2), (0...2), (1...2), (1...2)])
+        end
+      end
+
     end
 
     context "when concerned with performance" do
