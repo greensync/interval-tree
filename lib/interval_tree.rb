@@ -19,32 +19,35 @@ module IntervalTree
 
       intervals.each do |k|
         case
-        when k.last.to_r < x_center
+        when k.end.to_r < x_center
           s_left << k
-        when k.first.to_r > x_center
+        when k.begin.to_r > x_center
           s_right << k
         else
           s_center << k
         end
       end
+
+      s_center.sort_by! { |x| [x.begin, x.end] }
+      
       Node.new(x_center, s_center,
                divide_intervals(s_left), divide_intervals(s_right))
     end
 
     # Search by range or point
-    DEFAULT_OPTIONS = {unique: true}
+    DEFAULT_OPTIONS = { unique: true }
     def search(query, options = {})
       options = DEFAULT_OPTIONS.merge(options)
 
       return nil unless @top_node
 
-      if query.respond_to?(:first)
+      if query.respond_to?(:begin)
         result = top_node.search(query)
-        options[:unique] ? result.uniq : result
+        options[:unique] ? result.uniq! : result
       else
-        point_search(self.top_node, query, [], options[:unique])
+        result = point_search(self.top_node, query, [], options[:unique])
       end
-        .sort_by{|x|[x.first, x.last]}
+        result
     end
 
     def ==(other)
@@ -61,7 +64,7 @@ module IntervalTree
         when range.exclude_end?
           range
         else
-          range_factory.call(range.first, range.end)
+          range_factory.call(range.begin, range.end)
         end
       end
     end
@@ -75,19 +78,20 @@ module IntervalTree
 
     def point_search(node, point, result, unique)
       stack = [node]
+      point_r = point.to_r
 
       until stack.empty?
         node = stack.pop
 
         node.s_center.each do |k|
-          if k.begin <= point && point < k.end
-            result << k
-          end
+          break if k.begin > point
+          result << k if point < k.end
         end
-        if node.left_node && ( point.to_r < node.x_center )
+        
+        if node.left_node && ( point_r < node.x_center )
           stack << node.left_node
 
-        elsif node.right_node && ( point.to_r >= node.x_center )
+        elsif node.right_node && ( point_r >= node.x_center )
           stack << node.right_node
         end
 
@@ -126,7 +130,12 @@ module IntervalTree
     private
 
     def search_s_center(query)
-      s_center.select do |k|
+      result = []
+
+      s_center.each do |k|
+        break if k.begin > query.end
+
+        next unless
         (
           # k is entirely contained within the query
           (k.begin >= query.begin) &&
@@ -144,7 +153,10 @@ module IntervalTree
           (k.begin < query.begin) &&
           (k.end > query.end)
         )
+        result << k
       end
+
+      result
     end
   end # class Node
 
