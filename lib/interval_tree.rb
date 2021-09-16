@@ -82,17 +82,20 @@ module IntervalTree
 
       until stack.empty?
         node = stack.pop
+        node_left_node = node.left_node
+        node_right_node = node.right_node
+        node_x_center = node.x_center
 
         node.s_center.each do |k|
           break if k.begin > point
           result << k if point < k.end
         end
         
-        if node.left_node && ( point_r < node.x_center )
-          stack << node.left_node
+        if node_left_node && ( point_r < node_x_center )
+          stack << node_left_node
 
-        elsif node.right_node && ( point_r >= node.x_center )
-          stack << node.right_node
+        elsif node_right_node && ( point_r >= node_x_center )
+          stack << node_right_node
         end
 
       end
@@ -133,25 +136,33 @@ module IntervalTree
       result = []
 
       s_center.each do |k|
-        break if k.begin > query.end
+        k_begin = k.begin
+        query_end = query.end
 
+        break if k_begin > query_end
+
+        k_end = k.end
+        query_begin = query.begin
+
+        k_begin_gte_q_begin = k_begin >= query_begin
+        k_end_lte_q_end = k_end <= query_end
         next unless
         (
           # k is entirely contained within the query
-          (k.begin >= query.begin) &&
-          (k.end <= query.end)
+          (k_begin_gte_q_begin) &&
+          (k_end_lte_q_end)
         ) || (
           # k's start overlaps with the query
-          (k.begin >= query.begin) &&
-          (k.begin < query.end)
+          (k_begin_gte_q_begin) &&
+          (k_begin < query_end)
         ) || (
           # k's end overlaps with the query
-          (k.end > query.begin) &&
-          (k.end <= query.end)
+          (k_end > query_begin) &&
+          (k_end_lte_q_end)
         ) || (
           # k is bigger than the query
-          (k.begin < query.begin) &&
-          (k.end > query.end)
+          (k_begin < query_begin) &&
+          (k_end > query_end)
         )
         result << k
       end
