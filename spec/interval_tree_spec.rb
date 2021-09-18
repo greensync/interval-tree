@@ -247,6 +247,24 @@ describe "IntervalTree::Tree" do
       end
     end
 
+    context 'given [(0...30),(20...100)] and a sorted point query "25"' do
+      it 'returns [(0...30),(20...100)]' do
+        itvs = [(0...30),(20...100)]
+
+        results = IntervalTree::Tree.new(itvs).search(25, unique: false, sort: true)
+        expect(results).to match_array([(0...30),(20...100)])
+      end
+    end
+
+    context 'given [(0...30),(20...100)] and an unsorted point query "25"' do
+      it 'returns [(20...100),(0...30)]' do
+        itvs = [(0...30),(20...100)]
+
+        results = IntervalTree::Tree.new(itvs).search(25, unique: false, sort: false)
+        expect(results).to match_array([(20...100), (0...30)])
+      end
+    end
+
     context 'given [(0...8), (1...5), (2...6)] and a point query "3"' do
       it 'returns [(0...8), (1...5), (2...6)]' do
         itvs = [(0...8), (1...5), (2...6)]

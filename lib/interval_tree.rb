@@ -35,7 +35,7 @@ module IntervalTree
     end
 
     # Search by range or point
-    DEFAULT_OPTIONS = { unique: true }.freeze
+    DEFAULT_OPTIONS = { unique: true, sort: true }.freeze
     def search(query, options = {})
       options = DEFAULT_OPTIONS.merge(options)
 
@@ -47,7 +47,7 @@ module IntervalTree
       else
         result = point_search(top_node, query, [], options[:unique])
       end
-      result
+      options[:sort] ? result.sort_by { |x| [x.begin, x.end] } : result
     end
 
     def ==(other)
