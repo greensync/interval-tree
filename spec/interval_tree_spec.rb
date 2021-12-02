@@ -68,7 +68,7 @@ describe "IntervalTree::Tree" do
     end
 
     context 'given [(1...5), (2...6)]' do
-      it 'returns 3' do
+      it 'returns 3.5' do
         itvs = [(1...5), (2...6),]
         t = IntervalTree::Tree.new([])
         expect(t.__send__(:center, itvs)).to be == 3.5
