@@ -6,6 +6,7 @@ module IntervalTree
     def initialize(ranges, &range_factory)
       range_factory = ->(l, r) { (l...r + 1) } unless block_given?
       ranges_excl = ensure_exclusive_end([ranges].flatten, range_factory)
+      ranges_excl.sort_by! { |x| [x.begin, x.end] }
       @top_node = divide_intervals(ranges_excl)
     end
     attr_reader :top_node
@@ -77,24 +78,26 @@ module IntervalTree
 
     def point_search(node, point, result, unique)
       stack = [node]
-      point_r = point.to_r
 
       until stack.empty?
         node = stack.pop
         node_left_node = node.left_node
         node_right_node = node.right_node
         node_x_center = node.x_center
+        traverse_left = (point < node_x_center)
 
-        node.s_center.each do |k|
-          break if k.begin > point
+        if point < node.s_center_end
+          node.s_center.each do |k|
+            break if k.begin > point
 
-          result << k if point < k.end
+            result << k if point < k.end
+          end
         end
 
-        if node_left_node && (point_r < node_x_center)
+        if node_left_node && traverse_left
           stack << node_left_node
 
-        elsif node_right_node && (point_r >= node_x_center)
+        elsif node_right_node && !traverse_left
           stack << node_right_node
         end
 
@@ -111,10 +114,11 @@ module IntervalTree
     def initialize(x_center, s_center, left_node, right_node)
       @x_center = x_center
       @s_center = s_center
+      @s_center_end = s_center.map(&:end).max
       @left_node = left_node
       @right_node = right_node
     end
-    attr_reader :x_center, :s_center, :left_node, :right_node
+    attr_reader :x_center, :s_center, :s_center_end, :left_node, :right_node
 
     def ==(other)
       x_center == other.x_center &&
@@ -126,8 +130,8 @@ module IntervalTree
     # Search by range only
     def search(query)
       search_s_center(query) +
-        (left_node && query.begin.to_r < x_center && left_node.search(query) || []) +
-        (right_node && query.end.to_r > x_center && right_node.search(query) || [])
+        (left_node && query.begin < x_center && left_node.search(query) || []) +
+        (right_node && query.end > x_center && right_node.search(query) || [])
     end
 
     private
