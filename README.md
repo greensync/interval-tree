@@ -8,6 +8,10 @@ An implementation of the centered interval tree algorithm in Ruby.
 
 * [A description of the algorithm in Wikipedia](http://en.wikipedia.org/wiki/Interval_tree)
 
+## Maintainers Wanted!
+
+We are not currently using `interval-tree` at GreenSync; however, we recognize that it may still be useful to some. With our efforts currently focused elsewhere, we are seeking a new maintainer(s) to be the primary maintainer for the project. Please get in touch with @maddymarkovitz or @ZimbiX if you are interested.
+
 ## ChangeLog
 
 ### 2020-11-09, contribution by [Brendan Weibrecht](https://github.com/ZimbiX), [Chris Nankervis](https://github.com/chrisnankervis) and [Thomas van der Pol](https://github.com/tvanderpol)
