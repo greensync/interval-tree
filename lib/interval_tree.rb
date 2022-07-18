@@ -73,17 +73,24 @@ module IntervalTree
       ) / 2
     end
 
-    def point_search(node, point, result, unique = true)
-      node.s_center.each do |k|
-        if k.include?(point)
-          result << k
+    def point_search(node, point, result, unique)
+      stack = [node]
+
+      until stack.empty?
+        node = stack.pop
+
+        node.s_center.each do |k|
+          if k.begin <= point && point < k.end
+            result << k
+          end
         end
-      end
-      if node.left_node && ( point.to_r < node.x_center )
-        point_search(node.left_node, point, []).each{|k|result << k}
-      end
-      if node.right_node && ( point.to_r >= node.x_center )
-        point_search(node.right_node, point, []).each{|k|result << k}
+        if node.left_node && ( point.to_r < node.x_center )
+          stack << node.left_node
+
+        elsif node.right_node && ( point.to_r >= node.x_center )
+          stack << node.right_node
+        end
+
       end
       if unique
         result.uniq
