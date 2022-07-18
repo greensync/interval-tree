@@ -55,14 +55,44 @@ p t.search(2, unique: false) #=> [0...3, 0...3, 1...4]
 p t.search(1...4) #=> [0...3, 1...4, 3...5]
 ```
 
+Non-range objects can be used with the tree, as long as they respond to `begin` and `end`. This is useful for storing data along side the intervals. For example:
+```ruby
+require "interval_tree"
+
+CS = Struct.new(:begin, :end, :value) # CS = CustomStruct
+
+itv = [
+  CS.new(0,3, "Value"), CS.new(0,3, "Value"),
+  CS.new(1,4, %w[This is an array]), CS.new(3,5, %w[A second an array])
+]
+
+t = IntervalTree::Tree.new(itv)
+pp t.search(2)     
+#=> [#<struct CS begin=0, end=3, value="Value">,
+#    #<struct CS begin=1, end=4, value=["This", "is", "an", "array"]>]
+
+pp t.search(2, unique: false) 
+#=> [#<struct CS begin=0, end=3, value="Value">,
+#    #<struct CS begin=0, end=3, value="Value">, 
+#    #<struct CS begin=1, end=4, value=["This", "is", "an", "array"]>]
+
+pp t.search(1...4) 
+#=> [#<struct CS begin=0, end=3, value="Value">,
+#    #<struct CS begin=1, end=4, value=["This", "is", "an", "array"]>,
+#    #<struct CS begin=3, end=5, value=["A", "second", "an", "array"]>]
+```
+
 ## Note
 
 Result intervals are always returned
 in the "left-closed and right-open" style that can be expressed
-by three-dotted Range object literals `(first...last)`
+by three-dotted Range object literals `(begin...end)`
 
-Two-dotted full-closed intervals `(first..last)` are also accepted and internally
+Two-dotted full-closed intervals `(begin..end)` are also accepted and internally
 converted to half-closed intervals.
+
+When using custom objects the tree assumes the "left-closed and right-open" style (i.e. the `end` property is not
+considered to be inside the interval).
 
 ## Copyright
 
